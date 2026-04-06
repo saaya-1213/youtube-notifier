@@ -1,0 +1,8 @@
+{
+  "name": "youtube-notifier",
+  "version": "1.0.0",
+  "description": "YouTube新着動画をFirestoreのお知らせに自動投稿",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}

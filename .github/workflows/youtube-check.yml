@@ -1,0 +1,35 @@
+name: YouTube新着動画チェック
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 毎時0分に実行
+  workflow_dispatch:       # 手動実行ボタンも使える
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: パッケージインストール
+        run: npm install
+
+      - name: YouTube動画チェック
+        run: node scripts/check-youtube.js
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: 最終確認IDを保存
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add last_video_id.txt
+          git diff --staged --quiet || git commit -m "Update last video ID"
+          git push
