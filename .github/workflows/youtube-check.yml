@@ -2,7 +2,7 @@ name: YouTube新着動画チェック
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 毎時0分に実行
+    - cron: '0 12 */3 * *'  # 3日ごと 21:00 JST（= 12:00 UTC）
   workflow_dispatch:       # 手動実行ボタンも使える
 
 jobs:
