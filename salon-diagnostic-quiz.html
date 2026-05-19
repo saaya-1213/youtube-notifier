@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>エミュ式｜売れるカウンセリング診断書</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Shippori+Mincho:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f2cfc8;
+    --blush-light: #faf0ee;
+    --blush-mid: #e8b8b0;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b5;
+    --dark: #2a1f1a;
+    --mid: #6b4f47;
+    --soft: #9c7b75;
+    --white: #fefcfb;
+    --shadow: rgba(42,31,26,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--blush-light);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .page {
+    display: none;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #fff8f6 0%, #fde8e2 40%, #f5d5cc 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.15) 0%, transparent 70%);
+  }
+
+  #cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(242,207,200,0.5) 0%, transparent 70%);
+  }
+
+  .cover-inner {
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand-label {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .cover-deco-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .cover-deco-line span {
+    height: 1px;
+    width: 48px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .cover-deco-line span:last-child {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .cover-deco-line .diamond {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .cover-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(26px, 7vw, 36px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .cover-sub {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    color: var(--soft);
+    letter-spacing: 0.1em;
+    margin-bottom: 36px;
+    line-height: 1.8;
+  }
+
+  .cover-catch {
+    font-size: 12px;
+    color: var(--mid);
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--gold-light);
+    border-radius: 40px;
+    padding: 6px 20px;
+    display: inline-block;
+    margin-bottom: 36px;
+    letter-spacing: 0.05em;
+  }
+
+  .checklist-cover {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    text-align: left;
+    backdrop-filter: blur(4px);
+  }
+
+  .checklist-cover-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .checklist-cover li {
+    list-style: none;
+    font-size: 13px;
+    color: var(--mid);
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .checklist-cover li:last-child { border-bottom: none; }
+  .checklist-cover li::before {
+    content: '✔';
+    color: var(--gold);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .btn-start {
+    background: linear-gradient(135deg, #c9a96e 0%, #b8916a 100%);
+    color: white;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 18px 48px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(180,130,80,0.35);
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+  }
+  .btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(180,130,80,0.45);
+  }
+
+  .page-wrap {
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    border: 1px solid var(--gold-light);
+    border-radius: 20px;
+    padding: 4px 16px;
+    margin-bottom: 16px;
+  }
+
+  .page-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(20px, 5.5vw, 26px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .page-desc {
+    font-size: 12px;
+    color: var(--soft);
+    line-height: 1.8;
+  }
+
+  .worry-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .worry-item {
+    background: white;
+    border: 1.5px solid rgba(201,169,110,0.2);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+
+  .worry-item.checked {
+    background: linear-gradient(135deg, #fff8f5, #fdecea);
+    border-color: var(--blush-mid);
+    box-shadow: 0 4px 16px rgba(232,184,176,0.3);
+  }
+
+  .worry-check {
+    width: 22px; height: 22px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+
+  .worry-item.checked .worry-check {
+    background: var(--blush-mid);
+    border-color: var(--blush-mid);
+  }
+
+  .worry-check-mark {
+    display: none;
+    color: white;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .worry-item.checked .worry-check-mark { display: block; }
+
+  .worry-text {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  .diag-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow);
+    margin-bottom: 16px;
+  }
+
+  .diag-cat-header {
+    background: linear-gradient(90deg, #f9ede9, #fdf5f0);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+
+  .diag-cat-icon { font-size: 18px; }
+
+  .diag-cat-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    letter-spacing: 0.05em;
+  }
+
+  .diag-items { padding: 8px 0; }
+
+  .diag-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 12px;
+    border-bottom: 1px solid rgba(242,207,200,0.3);
+    transition: background 0.2s;
+  }
+  .diag-row:last-child { border-bottom: none; }
+
+  .diag-label {
+    flex: 1;
+    font-size: 13px;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  .toggle-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .toggle-btn {
+    width: 46px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #e0e0e0;
+    background: white;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #aaa;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  .toggle-btn.yes.active {
+    background: linear-gradient(135deg, #f2cfc8, #e8b8b0);
+    border-color: var(--blush-mid);
+    color: var(--dark);
+    box-shadow: 0 2px 8px rgba(232,184,176,0.4);
+  }
+
+  .toggle-btn.no.active {
+    background: #f5f5f5;
+    border-color: #ccc;
+    color: #888;
+  }
+
+  .score-bar-wrap {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+
+  .score-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--soft);
+    margin-bottom: 10px;
+  }
+
+  .score-bar-track {
+    height: 10px;
+    background: #f0e8e5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blush-mid), var(--gold));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  .score-count {
+    text-align: center;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: var(--mid);
+    margin-top: 10px;
+  }
+  .score-count span {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #c9a96e 0%, #b8916a 100%);
+    color: white;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 17px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(180,130,80,0.35);
+    transition: all 0.3s ease;
+    width: 100%;
+    display: block;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(180,130,80,0.45);
+  }
+  .btn-primary:disabled {
+    background: #ddd;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    background: white;
+    color: var(--mid);
+    font-size: 13px;
+    padding: 12px 24px;
+    border: 1.5px solid var(--gold-light);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 12px;
+    display: block;
+  }
+  .btn-secondary:hover { background: var(--blush-light); }
+
+  #result {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #fff8f6 0%, #fde8e2 40%, #f5d5cc 100%);
+    padding: 40px 20px 80px;
+  }
+
+  .result-inner { max-width: 480px; margin: 0 auto; }
+
+  .result-badge-wrap {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .result-circle {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff, #fdecea);
+    border: 3px solid var(--gold-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 8px 32px rgba(201,169,110,0.25);
+  }
+
+  .result-score-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .result-score-label {
+    font-size: 11px;
+    color: var(--soft);
+    margin-top: 4px;
+    letter-spacing: 0.1em;
+  }
+
+  .result-type-badge {
+    display: inline-block;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    border: 1px solid var(--gold-light);
+    border-radius: 20px;
+    padding: 4px 20px;
+    margin-bottom: 12px;
+    background: rgba(255,255,255,0.7);
+  }
+
+  .result-type-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(22px, 6vw, 30px);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .result-message {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 2;
+    background: rgba(255,255,255,0.7);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 28px;
+    text-align: left;
+    border: 1px solid rgba(201,169,110,0.2);
+  }
+
+  .cat-scores {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+
+  .cat-score-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .cat-score-row { margin-bottom: 16px; }
+
+  .cat-score-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .cat-score-name {
+    font-size: 12px;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cat-score-val {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .cat-bar-track {
+    height: 8px;
+    background: #f0e8e5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .cat-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.8s ease;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, #fff8f5, white);
+    border: 2px solid rgba(201,169,110,0.3);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 8px 32px var(--shadow);
+  }
+
+  .cta-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  .cta-sub {
+    font-size: 12px;
+    color: var(--soft);
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  .cta-benefits {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  .cta-benefit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--mid);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .cta-benefit:last-child { border: none; }
+  .cta-benefit::before {
+    content: '✔';
+    color: var(--gold);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .contact-note {
+    background: linear-gradient(135deg, #fdf5f0, #fff8f5);
+    border: 1.5px solid var(--gold-light);
+    border-radius: 14px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .contact-note-text {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .contact-note-sub {
+    font-size: 12px;
+    color: var(--soft);
+    line-height: 1.7;
+  }
+
+  .retry-btn {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--soft);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .progress-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0 0;
+    margin-bottom: 8px;
+  }
+  .prog-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+    transition: all 0.3s;
+  }
+  .prog-dot.active {
+    background: var(--gold);
+    width: 24px;
+    border-radius: 4px;
+  }
+  .prog-dot.done { background: var(--blush-mid); }
+
+  .hint-note {
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 380px) {
+    .toggle-btn { width: 40px; height: 29px; font-size: 11px; }
+    .diag-label { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div id="cover" class="page active">
+  <div class="cover-inner">
+    <p class="brand-label">EMU STYLE</p>
+    <div class="cover-deco-line">
+      <span></span><div class="diamond"></div><span></span>
+    </div>
+    <h1 class="cover-title">売れるカウンセリング<br>診断書</h1>
+    <p class="cover-sub">あなたのサロンはどこで<br>取りこぼしている？</p>
+    <span class="cover-catch">✨ 所要時間：約3分</span>
+
+    <div class="checklist-cover">
+      <p class="checklist-cover-title">— この診断でわかること —</p>
+      <ul>
+        <li>リピート率の取りこぼしポイント</li>
+        <li>単価アップを妨げている原因</li>
+        <li>提案力・クロージング力のレベル</li>
+        <li>お客様満足度を左右するポイント</li>
+        <li>カウンセリングの感覚頼り度</li>
+      </ul>
+    </div>
+
+    <button class="btn-start" onclick="goTo('worry')">診断をはじめる →</button>
+  </div>
+</div>
+
+<!-- お悩みチェック -->
+<div id="worry" class="page">
+  <div class="page-wrap">
+    <div class="progress-nav">
+      <div class="prog-dot done"></div>
+      <div class="prog-dot active"></div>
+      <div class="prog-dot"></div>
+      <div class="prog-dot"></div>
+    </div>
+    <div class="page-header">
+      <span class="step-badge">STEP 01 — お悩み確認</span>
+      <h2 class="page-title">今、こんなお悩み<br>ありませんか？</h2>
+      <p class="page-desc">あてはまるものをタップしてください<br>（複数選択OK）</p>
+    </div>
+
+    <div class="worry-list">
+      <div class="worry-item" onclick="toggleWorry(this)">
+        <div class="worry-check"><span class="worry-check-mark">✓</span></div>
+        <p class="worry-text">技術には自信があるのに売上が安定しない</p>
+      </div>
+      <div class="worry-item" onclick="toggleWorry(this)">
+        <div class="worry-check"><span class="worry-check-mark">✓</span></div>
+        <p class="worry-text">"押し売り感"が怖くて提案できない</p>
+      </div>
+      <div class="worry-item" onclick="toggleWorry(this)">
+        <div class="worry-check"><span class="worry-check-mark">✓</span></div>
+        <p class="worry-text">頑張っているのにリピートに繋がらない</p>
+      </div>
+      <div class="worry-item" onclick="toggleWorry(this)">
+        <div class="worry-check"><span class="worry-check-mark">✓</span></div>
+        <p class="worry-text">スタッフによって売上に差が出る</p>
+      </div>
+      <div class="worry-item" onclick="toggleWorry(this)">
+        <div class="worry-check"><span class="worry-check-mark">✓</span></div>
+        <p class="worry-text">カウンセリングが"感覚"になっている</p>
+      </div>
+      <div class="worry-item" onclick="toggleWorry(this)">
+        <div class="worry-check"><span class="worry-check-mark">✓</span></div>
+        <p class="worry-text">お客様に断られるのが怖くて提案を避けてしまう</p>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goTo('diag')">次へ：診断チェックへ →</button>
+  </div>
+</div>
+
+<!-- 診断チェック -->
+<div id="diag" class="page">
+  <div class="page-wrap">
+    <div class="progress-nav">
+      <div class="prog-dot done"></div>
+      <div class="prog-dot done"></div>
+      <div class="prog-dot active"></div>
+      <div class="prog-dot"></div>
+    </div>
+    <div class="page-header">
+      <span class="step-badge">STEP 02 — 診断チェック</span>
+      <h2 class="page-title">売れるカウンセリング<br>診断</h2>
+      <p class="page-desc">各項目について YES / NO を選んでください</p>
+    </div>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar-label">
+        <span>診断スコア</span>
+        <span id="score-text">0 / 10</span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" id="score-fill"></div>
+      </div>
+      <p class="score-count"><span id="score-num">0</span> / 10 YES</p>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-cat-header">
+        <span class="diag-cat-icon">💬</span>
+        <span class="diag-cat-name">ヒアリング力</span>
+      </div>
+      <div class="diag-items">
+        <div class="diag-row">
+          <span class="diag-label">お客様の本音を引き出せている</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',0,0)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',0,0)">NO</button>
+          </div>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">悩みの"原因"まで説明できる</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',0,1)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',0,1)">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-cat-header">
+        <span class="diag-cat-icon">🌟</span>
+        <span class="diag-cat-name">提案力</span>
+      </div>
+      <div class="diag-items">
+        <div class="diag-row">
+          <span class="diag-label">未来をイメージさせられている</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',1,0)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',1,0)">NO</button>
+          </div>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">単なるメニュー説明になっていない</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',1,1)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',1,1)">NO</button>
+          </div>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">お客様が納得して選んでいる</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',1,2)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',1,2)">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-cat-header">
+        <span class="diag-cat-icon">💰</span>
+        <span class="diag-cat-name">クロージング力</span>
+      </div>
+      <div class="diag-items">
+        <div class="diag-row">
+          <span class="diag-label">断られても次のアクションがある</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',2,0)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',2,0)">NO</button>
+          </div>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">価格よりも"価値"で選んでもらえている</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',2,1)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',2,1)">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-cat-header">
+        <span class="diag-cat-icon">🔄</span>
+        <span class="diag-cat-name">リピート設計</span>
+      </div>
+      <div class="diag-items">
+        <div class="diag-row">
+          <span class="diag-label">次回予約を自然に促せている</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',3,0)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',3,0)">NO</button>
+          </div>
+        </div>
+        <div class="diag-row">
+          <span class="diag-label">お客様が「またここに来たい」と思う仕掛けがある</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',3,1)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',3,1)">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-cat-header">
+        <span class="diag-cat-icon">❤️</span>
+        <span class="diag-cat-name">お客様満足度</span>
+      </div>
+      <div class="diag-items">
+        <div class="diag-row">
+          <span class="diag-label">施術後にお客様の表情が明るくなっている</span>
+          <div class="toggle-group">
+            <button class="toggle-btn yes" onclick="setAnswer(this,'yes',4,0)">YES</button>
+            <button class="toggle-btn no"  onclick="setAnswer(this,'no',4,0)">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint-note">すべての項目に答えると診断結果が出ます</p>
+
+    <div style="margin-top: 28px;">
+      <button class="btn-primary" id="result-btn" onclick="showResult()" disabled>
+        診断結果を見る ✨
+      </button>
+      <button class="btn-secondary" onclick="goTo('worry')">← 戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- 結果ページ -->
+<div id="result" class="page">
+  <div class="result-inner">
+    <div class="progress-nav" style="padding-top:0; margin-bottom:28px;">
+      <div class="prog-dot done"></div>
+      <div class="prog-dot done"></div>
+      <div class="prog-dot done"></div>
+      <div class="prog-dot active"></div>
+    </div>
+
+    <div class="result-badge-wrap">
+      <div class="result-circle">
+        <div class="result-score-num" id="res-score">—</div>
+        <div class="result-score-label">YES / 10</div>
+      </div>
+      <div class="result-type-badge" id="res-badge">診断タイプ</div>
+      <h2 class="result-type-title" id="res-title">—</h2>
+    </div>
+
+    <div class="result-message" id="res-message"></div>
+
+    <div class="cat-scores">
+      <p class="cat-score-title">— カテゴリ別スコア —</p>
+      <div id="cat-score-bars"></div>
+    </div>
+
+    <div class="cta-box">
+      <p class="cta-title">もっと詳しく知りたい方へ</p>
+      <p class="cta-sub">\ 無料相談 受付中 ／<br>診断結果を送ってくれた方に<br><strong>ワンポイントアドバイス</strong>をお返しします✨</p>
+      <div class="cta-benefits">
+        <div class="cta-benefit">リピート率改善の具体的な方法</div>
+        <div class="cta-benefit">単価アップのための伝え方</div>
+        <div class="cta-benefit">売れる提案の組み立て方</div>
+        <div class="cta-benefit">お客様心理の読み解き方</div>
+      </div>
+      <div class="contact-note">
+        <p class="contact-note-text">ご相談・ご連絡はDMから</p>
+        <p class="contact-note-sub">お気軽にDMしてください✨</p>
+      </div>
+    </div>
+
+    <p class="retry-btn" onclick="restart()">← もう一度診断する</p>
+  </div>
+</div>
+
+<script>
+  const answers = [
+    [null, null],
+    [null, null, null],
+    [null, null],
+    [null, null],
+    [null],
+  ];
+
+  const catNames = ['ヒアリング力','提案力','クロージング力','リピート設計','お客様満足度'];
+  const catIcons = ['💬','🌟','💰','🔄','❤️'];
+  const catColors = ['#f2cfc8','#c9a96e','#e8b8b0','#d4a87a','#f5c1bb'];
+
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function toggleWorry(el) { el.classList.toggle('checked'); }
+
+  function setAnswer(btn, val, catIdx, qIdx) {
+    const group = btn.parentElement;
+    group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    answers[catIdx][qIdx] = (val === 'yes') ? 1 : 0;
+    updateScore();
+  }
+
+  function getYesCount() { return answers.flat().filter(v => v === 1).length; }
+  function getTotalAnswered() { return answers.flat().filter(v => v !== null).length; }
+
+  function updateScore() {
+    const yes = getYesCount();
+    document.getElementById('score-num').textContent = yes;
+    document.getElementById('score-text').textContent = `${yes} / 10`;
+    document.getElementById('score-fill').style.width = (yes / 10 * 100) + '%';
+    document.getElementById('result-btn').disabled = getTotalAnswered() !== 10;
+  }
+
+  function showResult() {
+    const yes = getYesCount();
+    document.getElementById('res-score').textContent = yes;
+
+    let badge, title, message;
+    if (yes >= 8) {
+      badge = '✨ 売れるカウンセリング型';
+      title = '完成度の高い\n売れるカウンセリング力をお持ちです！';
+      message = `素晴らしい！あなたはすでに「売り込まずに選ばれる」カウンセリングの本質を体現しています。\n\nお客様の本音を引き出し、必要性を伝える力がしっかり身についています。\n\nこのレベルに達しているあなたが次にやるべきは、この力をスタッフに伝えてチームで再現すること。あなたの"感覚"を仕組みに変えるステップへ進みましょう✨`;
+    } else if (yes >= 5) {
+      badge = '💡 伸びしろ型';
+      title = '惜しい！伝え方を\n磨けば一気に伸びます';
+      message = `良い土台はあります！ただ、"伝え方"の部分でまだ取りこぼしが起きています。\n\nお客様があなたのサービスの価値に気づいていない状態のまま終わっているケースが多いはず。\n\n提案のタイミングと言葉を少し変えるだけで、リピート率・単価が変わってきます。一緒に改善しましょう✨`;
+    } else {
+      badge = '⚠️ 技術頼り型';
+      title = '技術力だけでは\n限界がきています';
+      message = `技術には自信があるのに、それが売上に繋がっていない状態になっていませんか？\n\nそれはあなたの技術が低いのではなく、「必要性を伝える力」がまだ身についていないだけ。\n\nカウンセリングを変えるだけで売上は変わります。まずは一緒に現状を整理しましょう。焦らなくて大丈夫です✨`;
+    }
+
+    document.getElementById('res-badge').textContent = badge;
+    document.getElementById('res-title').textContent = title;
+    document.getElementById('res-message').innerHTML = message.split('\n\n').map(p => `<p style="margin-bottom:12px">${p}</p>`).join('');
+
+    const container = document.getElementById('cat-score-bars');
+    container.innerHTML = '';
+    answers.forEach((cat, i) => {
+      const yesInCat = cat.filter(v => v === 1).length;
+      const pct = cat.length > 0 ? (yesInCat / cat.length) * 100 : 0;
+      container.innerHTML += `
+        <div class="cat-score-row">
+          <div class="cat-score-info">
+            <span class="cat-score-name">${catIcons[i]} ${catNames[i]}</span>
+            <span class="cat-score-val">${yesInCat} / ${cat.length}</span>
+          </div>
+          <div class="cat-bar-track">
+            <div class="cat-bar-fill" style="width:${pct}%; background:${catColors[i]}"></div>
+          </div>
+        </div>`;
+    });
+
+    goTo('result');
+    setTimeout(() => {
+      document.querySelectorAll('.cat-bar-fill').forEach(el => {
+        const w = el.style.width; el.style.width = '0';
+        setTimeout(() => el.style.width = w, 100);
+      });
+    }, 300);
+  }
+
+  function restart() {
+    answers.forEach((cat, i) => answers[i] = cat.map(() => null));
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.worry-item').forEach(i => i.classList.remove('checked'));
+    document.getElementById('result-btn').disabled = true;
+    updateScore();
+    goTo('cover');
+  }
+</script>
+</body>
+</html>
